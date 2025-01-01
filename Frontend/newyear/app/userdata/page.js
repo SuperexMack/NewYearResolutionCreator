@@ -1,71 +1,145 @@
 "use client"
+
 import { useState } from "react";
-import { Navbar } from "../Components/Navbar";
-import axios from 'axios';
-import { Github, Code2, Loader2, Sparkles, Menu, X } from 'lucide-react';
+import { Menu, X } from "lucide-react";
+
+// Simple Navbar component
+const Navbar = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    return (
+        <nav className="bg-black/20 p-4">
+            <div className="max-w-7xl mx-auto">
+                <div className="flex justify-between items-center">
+                    <div className="text-white text-xl font-bold">✨ NewYear-Resolution</div>
+                    
+                    <div className="hidden md:flex gap-6">
+                        <h1 className="block text-white hover:text-gray-300">Home</h1>
+                        <h1 className="block text-white hover:text-gray-300">About</h1>
+                        <h1 className="block text-white hover:text-gray-300">Contact</h1>
+                        <h1 className="block text-white hover:text-gray-300">Contribute</h1>
+                    </div>
+
+                    <button 
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        className="md:hidden text-white"
+                    >
+                        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    </button>
+                </div>
+
+                {isMenuOpen && (
+                    <div className="md:hidden mt-4 space-y-4 pb-4">
+                        <h1 className="block text-white hover:text-gray-300">Home</h1>
+                        <h1 className="block text-white hover:text-gray-300">About</h1>
+                        <h1 className="block text-white hover:text-gray-300">Contact</h1>
+                        <h1 className="block text-white hover:text-gray-300">Contribute</h1>
+                    </div>
+                )}
+            </div>
+        </nav>
+    );
+};
+
 
 export default function(){
-    const [username , setLeetcodeUsername] = useState("")
-    const [showuserLeetcodedata , setandshowuserleetcodedata] = useState("")
+    const [username, setLeetcodeUsername] = useState("")
+    const [githubuserName, setGithubUsername] = useState("")
+    const [showuserLeetcodedata, setandshowuserleetcodedata] = useState("")
+    const [showgithubdata, setandshowusergithubdata] = useState("")
+    const [loading, setLoading] = useState(false)
     
     const userResolutionData = async () => {
-        const userdata = await axios.get(`https://leetcode-api-faisalshohag.vercel.app/${username}`);
-        console.log("Total problem solved" + userdata.data.totalSolved);
-        console.log("Easy problem solved "  + userdata.data.easySolved);
-        console.log("Medium problem solved "  + userdata.data.mediumSolved);
-        console.log("Hard problem solved "  + userdata.data.hardSolved);
-        console.log("Ranking is : " + userdata.data.ranking);
-        console.log("Reputation is : " + userdata.data.reputation);
-    
-        const leetcodeData = "Total problem solved by the user is " + userdata.data.totalSolved + " "
-            + "Easy problem solved by the user is" + userdata.data.easySolved  + " "+
-            "Medium problem solved by the user is" + userdata.data.mediumSolved  + " "+
-            "Hard problem solved by the user is" + userdata.data.hardSolved  + " "+
-            "Reputation of the user is : " + userdata.data.reputation  + " "+
-            "and total leetcode problem solving ranking of the user is " + userdata.data.ranking;
-    
-        await axios.post("http://localhost:9000/aiResponseData", {
-            userLeetcodeData: leetcodeData
-        })
-        .then((response) => {
-            setandshowuserleetcodedata(response.data.userdata);
-            console.log(response.data.userdata);
-        })
-        .catch((error) => {
+        setLoading(true)
+        try {
+            // LeetCode API call
+            const leetcodeResponse = await fetch(`https://leetcode-api-faisalshohag.vercel.app/${username}`);
+            const userdata = await leetcodeResponse.json();
+            
+            const leetcodeData = "Total problem solved by the user is " + userdata.totalSolved + " "
+                + "Easy problem solved by the user is " + userdata.easySolved + " "
+                + "Medium problem solved by the user is " + userdata.mediumSolved + " "
+                + "Hard problem solved by the user is " + userdata.hardSolved + " "
+                + "Reputation of the user is : " + userdata.reputation + " "
+                + "and total leetcode problem solving ranking of the user is " + userdata.ranking;
+
+            // Backend API calls
+            const aiResponse = await fetch("http://localhost:9000/aiResponseData", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userLeetcodeData: leetcodeData })
+            });
+            const aiData = await aiResponse.json();
+            setandshowuserleetcodedata(aiData.userdata);
+
+            const githubResponse = await fetch("http://localhost:9000/aiResponseData/github", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ githubdata: githubuserName })
+            });
+            const githubData = await githubResponse.json();
+            setandshowusergithubdata(githubData.usergithubData);
+        } catch (error) {
             console.log("Something went wrong " + error);
-        });
+        }
+        setLoading(false)
     };
     
     return(
-        <>
-        <Navbar></Navbar>
-        <div className="w-full h-screen bg-gradient-to-br from-indigo-900 via-blue-900 to-purple-900 flex justify-center items-center">
-            <div className="bg-white/10 backdrop-blur-lg rounded-lg w-1/2 h-[500px] flex flex-col justify-center items-center space-y-7">
-                <h1 className="text-[30px] text-white font-bold">Check the details of your profile 🔥</h1>
-                <input 
-                    onChange={(e)=>setLeetcodeUsername(e.target.value)}  
-                    placeholder="Enter Leetcode Username" 
-                    className="p-5 w-[70%] rounded-xl bg-black text-white">
-                </input>
-                <input 
-                    placeholder="Enter Github Username" 
-                    className="p-5 w-[70%] rounded-xl bg-black text-white">
-                </input>
-                <button 
-                    onClick={userResolutionData} 
-                    className="p-5 w-[70%] rounded-xl bg-black text-white text-[20px] font-bold">
-                    <span>Create Resolution</span>
-                </button>
-                {showuserLeetcodedata && (
-                    <div className="w-[70%] p-5 rounded-xl bg-black/50 text-white">
-                        <p className="text-[16px] leading-relaxed">
-                            {showuserLeetcodedata}
-                        </p>
-                    </div>
-                )}
-                <p className="text-[20px] text-white">What ever Result you will get from here try to take it in a positive way 💪</p>
+        <div className="min-h-screen flex flex-col bg-gradient-to-br from-indigo-900 via-blue-900 to-purple-900">
+            <Navbar />
+            
+            {/* Centered Input Form */}
+            <div className="flex-grow flex items-center justify-center px-4">
+                <div className="bg-white/10 backdrop-blur-lg rounded-lg w-full max-w-2xl p-8 space-y-7">
+                    <h1 className="text-3xl text-white font-bold text-center">Check the details of your profile 🔥</h1>
+                    <input 
+                        onChange={(e)=>setLeetcodeUsername(e.target.value)}  
+                        placeholder="Enter Leetcode Username" 
+                        className="p-5 w-full rounded-xl bg-black text-white"
+                    />
+                    <input 
+                        onChange={(e)=>setGithubUsername(e.target.value)}
+                        placeholder="Enter Github Username" 
+                        className="p-5 w-full rounded-xl bg-black text-white"
+                    />
+                    <button 
+                        onClick={userResolutionData} 
+                        className="p-5 w-full rounded-xl bg-black text-white text-xl font-bold"
+                    >
+                        {loading ? "Loading.........." : "Create Resolution"}
+                    </button>
+                    <p className="text-xl text-white text-center">Whatever result you get, try to take it in a positive way 💪</p>
+                </div>
             </div>
+
+            {/* Bottom Analysis Section */}
+            {(showuserLeetcodedata || showgithubdata) && (
+                <div className="w-full px-4 py-8 bg-black/20">
+                    <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-6">
+                        {showuserLeetcodedata && (
+                            <div className="p-6 rounded-xl bg-black/50 text-white">
+                                <h2 className="text-xl font-bold mb-4">LeetCode Analysis</h2>
+                                <p className="text-base leading-relaxed">
+                                    {showuserLeetcodedata}
+                                </p>
+                            </div>
+                        )}
+                        {showgithubdata && (
+                            <div className="p-6 rounded-xl bg-black/50 text-white">
+                                <h2 className="text-xl font-bold mb-4">GitHub Analysis</h2>
+                                <p className="text-base leading-relaxed">
+                                    {showgithubdata}
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
         </div>
-        </>
     )
 }
