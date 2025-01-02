@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import axios from "axios";
 
-// Simple Navbar component
+// Simple Navbar component remains the same
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -41,7 +42,6 @@ const Navbar = () => {
     );
 };
 
-
 export default function(){
     const [username, setLeetcodeUsername] = useState("")
     const [githubuserName, setGithubUsername] = useState("")
@@ -52,9 +52,10 @@ export default function(){
     const userResolutionData = async () => {
         setLoading(true)
         try {
-            // LeetCode API call
-            const leetcodeResponse = await fetch(`https://leetcode-api-faisalshohag.vercel.app/${username}`);
-            const userdata = await leetcodeResponse.json();
+            const leetcodeResponse = await axios.get(
+                `https://leetcode-api-faisalshohag.vercel.app/${username}`
+            );
+            const userdata = leetcodeResponse.data;
             
             const leetcodeData = "Total problem solved by the user is " + userdata.totalSolved + " "
                 + "Easy problem solved by the user is " + userdata.easySolved + " "
@@ -63,32 +64,34 @@ export default function(){
                 + "Reputation of the user is : " + userdata.reputation + " "
                 + "and total leetcode problem solving ranking of the user is " + userdata.ranking;
 
-            // Backend API calls
-            const aiResponse = await fetch("http://localhost:9000/aiResponseData", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ userLeetcodeData: leetcodeData })
-            });
-            const aiData = await aiResponse.json();
-            setandshowuserleetcodedata(aiData.userdata);
+            const aiResponse = await axios.post(
+                "http://localhost:9000/aiResponseData",
+                { userLeetcodeData: leetcodeData },
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            setandshowuserleetcodedata(aiResponse.data.userdata);
 
-            const githubResponse = await fetch("http://localhost:9000/aiResponseData/github", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ githubdata: githubuserName })
-            });
-            const githubData = await githubResponse.json();
-            setandshowusergithubdata(githubData.usergithubData);
+            const githubResponse = await axios.post(
+                "http://localhost:9000/aiResponseData/github",
+                { githubdata: githubuserName },
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            setandshowusergithubdata(githubResponse.data.usergithubData);
         } catch (error) {
-            console.log("Something went wrong " + error);
+            console.log("Something went wrong ", error);
         }
         setLoading(false)
     };
     
+    // Rest of the component remains the same
     return(
         <div className="min-h-screen flex flex-col bg-gradient-to-br from-indigo-900 via-blue-900 to-purple-900">
             <Navbar />
