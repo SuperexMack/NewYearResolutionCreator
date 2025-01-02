@@ -66,22 +66,12 @@ export default function(){
             const aiResponse = await axios.post(
                 "http://localhost:9000/aiResponseData",
                 { userLeetcodeData: leetcodeData },
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }
             );
             setandshowuserleetcodedata(aiResponse.data.userdata);
 
             const githubResponse = await axios.post(
                 "http://localhost:9000/aiResponseData/github",
                 { githubdata: githubuserName },
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }
             );
             setandshowusergithubdata(githubResponse.data.usergithubData);
         } catch (error) {
