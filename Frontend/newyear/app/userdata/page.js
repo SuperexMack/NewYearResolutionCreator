@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import axios from "axios";
 
-// Simple Navbar component remains the same
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -91,12 +90,10 @@ export default function(){
         setLoading(false)
     };
     
-    // Rest of the component remains the same
     return(
         <div className="min-h-screen flex flex-col bg-gradient-to-br from-indigo-900 via-blue-900 to-purple-900">
             <Navbar />
             
-            {/* Centered Input Form */}
             <div className="flex-grow flex items-center justify-center px-4">
                 <div className="bg-white/10 backdrop-blur-lg rounded-lg w-full max-w-2xl p-8 space-y-7">
                     <h1 className="text-3xl text-white font-bold text-center">Check the details of your profile 🔥</h1>
@@ -120,7 +117,6 @@ export default function(){
                 </div>
             </div>
 
-            {/* Bottom Analysis Section */}
             {(showuserLeetcodedata || showgithubdata) && (
                 <div className="w-full px-4 py-8 bg-black/20">
                     <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-6">
