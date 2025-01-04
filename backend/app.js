@@ -92,7 +92,7 @@ kahan kahan improvment ki need hai and kahan kahan bdiya kar raha hai user and p
 btya hai faltu koi symbol use karne ke need nahi hai sirf emoji aur data and kuch faltu symbol use nahi
 like *** ye to bilkul use mar karna and chota data rakhna please chota matlab chota  and data thoda chota
 rakh to the point rakh faltu ka lamba paragraph mat rakhna
-data takki user ko easily saamjh aa jaye please data ko kam kam kam chota rakhna jitna kam ho sake utna kam
+data takki user ko easily saamjh aa jaye please total data ka length 100 words rakhna
 . now do not respond me to anything except the resolution data`;
   
 
@@ -130,7 +130,7 @@ pehele to wish karna that happy new year and then thoda seriosly saare data dena
 kahan kahan improvment ki need hai and kahan kahan bdiya kar raha hai user and please maine 
 btya hai faltu koi symbol use karne ke need nahi hai sirf emoji aur data and kuch faltu symbol use nahi
 like *** ye to bilkul use mar karna and chota data rakhna please chota matlab chota  and data thoda chota
-rakh to the point rakh faltu ka lamba paragraph mat rakhna
+rakh to the point rakh faltu ka lamba paragraph mat rakhna 100 words mai khatam kar dena  
 data takki user ko easily saamjh aa jaye. now do not respond me to anything except the resolution data `;
   
   const result = await model.generateContent(prompt);
