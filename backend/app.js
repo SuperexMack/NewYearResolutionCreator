@@ -9,7 +9,14 @@ const cheerio = require("cheerio")
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-app.use(cors())
+
+const corsOptions = {
+  origin: 'https://2k25-resolution-creator.vercel.app', 
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions))
 app.use(express.json());
 
 
