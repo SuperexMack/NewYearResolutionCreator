@@ -19,7 +19,7 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 app.use(cors({
   origin: "https://2k25-resolution-creator.vercel.app",
   methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type']
+  allowedHeaders: ['Content-Type,Authorization']
 }))
 
 
