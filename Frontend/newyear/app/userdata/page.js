@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import axios from "axios";
+import Link from "next/link";
+
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,10 +16,10 @@ const Navbar = () => {
                     <div className="text-white text-xl font-bold">✨ NewYear-Resolution</div>
                     
                     <div className="hidden md:flex gap-6">
-                        <h1 className="block text-white hover:text-gray-300">Home</h1>
-                        <h1 className="block text-white hover:text-gray-300">About</h1>
-                        <h1 className="block text-white hover:text-gray-300">Contact</h1>
-                        <h1 className="block text-white hover:text-gray-300">Contribute</h1>
+                        <Link href={"/"}><h1 className="block text-white hover:text-gray-300">Home</h1></Link>
+                        <Link><h1 className="block text-white hover:text-gray-300">About</h1></Link>
+                        <Link><h1 className="block text-white hover:text-gray-300">Contact</h1></Link>
+                        <Link href={"/https://github.com/SuperexMack"}><h1 className="block text-white hover:text-gray-300">Contribute</h1></Link>
                     </div>
 
                     <button 
@@ -30,10 +32,10 @@ const Navbar = () => {
 
                 {isMenuOpen && (
                     <div className="md:hidden mt-4 space-y-4 pb-4">
-                        <h1 className="block text-white hover:text-gray-300">Home</h1>
-                        <h1 className="block text-white hover:text-gray-300">About</h1>
-                        <h1 className="block text-white hover:text-gray-300">Contact</h1>
-                        <h1 className="block text-white hover:text-gray-300">Contribute</h1>
+                        <Link href={"/"}><h1 className="block text-white hover:text-gray-300">Home</h1></Link>
+                        <Link><h1 className="block text-white hover:text-gray-300">About</h1></Link>
+                        <Link><h1 className="block text-white hover:text-gray-300">Contact</h1></Link>
+                        <Link href={'https://github.com/SuperexMack'}><h1 className="block text-white hover:text-gray-300">Contribute</h1></Link>
                     </div>
                 )}
             </div>

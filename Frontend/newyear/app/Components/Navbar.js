@@ -44,7 +44,7 @@ export function Navbar() {
               <button
                 className="relative text-lg font-medium text-white hover:text-blue-400 transition-colors group"
               >
-               <h1>Contribute</h1>
+               <Link href={"https://github.com/SuperexMack"}>Contribute</Link>
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300" />
               </button>
           </div>
@@ -82,7 +82,7 @@ export function Navbar() {
               <button
                 className="block w-full text-left px-4 py-3 text-lg font-medium text-white hover:bg-white/10 rounded-lg transition-colors"
               >
-                <h1>Contribute</h1>
+                <Link href={"https://github.com/SuperexMack"}>Contribute</Link>
               </button>
           </div>
         </div>
