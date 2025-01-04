@@ -64,13 +64,13 @@ export default function(){
                 + "and total leetcode problem solving ranking of the user is " + userdata.ranking;
 
             const aiResponse = await axios.post(
-                "https://new-year-resolution-creator-9ri8-ma7talavi-mack-walker.vercel.app/aiResponseData",
+                "https://new-year-resolution-creator-6xke.vercel.app/aiResponseData",
                 { userLeetcodeData: leetcodeData },
             );
             setandshowuserleetcodedata(aiResponse.data.userdata);
 
             const githubResponse = await axios.post(
-                "https://new-year-resolution-creator-9ri8-ma7talavi-mack-walker.vercel.app/aiResponseData/github",
+                "https://new-year-resolution-creator-6xke.vercel.app/aiResponseData/github",
                 { githubdata: githubuserName },
             );
             setandshowusergithubdata(githubResponse.data.usergithubData);
