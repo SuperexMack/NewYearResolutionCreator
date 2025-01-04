@@ -70,7 +70,7 @@ export default function(){
             setandshowuserleetcodedata(aiResponse.data.userdata);
 
             const githubResponse = await axios.post(
-                "https://new-year-resolution-creator-9ri8-ma7talavi-mack-walker.vercel.app/github",
+                "https://new-year-resolution-creator-9ri8-ma7talavi-mack-walker.vercel.app/aiResponseData/github",
                 { githubdata: githubuserName },
             );
             setandshowusergithubdata(githubResponse.data.usergithubData);
