@@ -17,7 +17,7 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 // };
 
 app.use(cors({
-  origin: "https://new-year-resolution-creator-9ri8-ma7talavi-mack-walker.vercel.app/aiResponseData",
+  origin: "https://2k25-resolution-creator.vercel.app",
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type']
 }))
