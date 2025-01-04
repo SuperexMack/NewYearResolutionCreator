@@ -28,7 +28,7 @@ app.use(express.json());
 
 app.get("/" , (req,res)=>{
     res.json({
-        msg : "Welcome to the website sir!!"
+        msg : "Welcome to the website sir!! || hope u will enjoy here"
     })
 })
 
